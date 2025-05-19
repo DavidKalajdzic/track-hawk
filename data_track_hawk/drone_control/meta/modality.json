@@ -1,0 +1,27 @@
+{
+    "state": {
+        "drone_state": { 
+            "start": 0,
+            "end": 5
+        }
+    },
+    "action": {
+        "drone_action": {
+            "start": 0,
+            "end": 4
+        }
+    },
+    "video": {
+        "depth": {
+            "original_key": "observation.images.depth"
+        },
+        
+        "vision": {
+            "original_key": "observation.images.vision"
+        }
+    },
+    "annotation": {
+        "human.action.task_description": {},
+        "human.validity": {}
+    }
+}
