@@ -1,152 +1,155 @@
 {
-    "codebase_version": "v2.0",
-    "robot_type": "DroneTrackHawk",
-    "total_episodes": 5,
-    "total_frames": 2096,
-    "total_tasks": 6,
-    "total_videos": 2,
-    "total_chunks": 0,
-    "chunks_size": 1000,
-    "fps": 0.5,
-    "splits": {
-        "train": "0:100"
+  "codebase_version": "v2.0",
+  "robot_type": "Dr00neTrackHawk",
+  "total_episodes": 6,
+  "total_frames": 5685,
+  "total_tasks": 6,
+  "total_videos": 6,
+  "total_chunks": 0,
+  "chunks_size": 6,
+  "fps": 0.5,
+  "splits": {
+    "train": "0:6"
+  },
+  "data_path": "data/chunk-{episode_chunk:03d}/episode_{episode_index:06d}.parquet",
+  "video_path": "videos/chunk-{episode_chunk:03d}/{video_key}/episode_{episode_index:06d}.mp4",
+  "features": {
+    "observation.images.depth": {
+      "dtype": "video",
+      "shape": [
+        144,
+        256,
+        3
+      ],
+      "names": [
+        "height",
+        "width",
+        "channel"
+      ],
+      "video_info": {
+        "video.fps": 0.5,
+        "video.codec": "h264",
+        "video.pix_fmt": "yuv420p",
+        "video.is_depth_map": false,
+        "has_audio": false
+      }
     },
-    "data_path": "data/chunk-{episode_chunk:03d}/episode_{episode_index:06d}.parquet",
-    "video_path": "videos/chunk-{episode_chunk:03d}/{video_key}/episode_{episode_index:06d}.mp4",
-    "features": {
-        "observation.images.rgb": {
-            "dtype": "video",
-            "shape": [
-                144,
-                256,
-                3
-            ],
-            "names": [
-                "height",
-                "width",
-                "channel"
-            ],
-            "video_info": {
-                "video.fps": 0.5,
-                "video.codec": "h264",
-                "video.pix_fmt": "yuv420p",
-                "video.is_depth_map": false,
-                "has_audio": false
-            }
-        },
-        "observation.images.segmentation": {
-            "dtype": "video",
-            "shape": [
-                144,
-                256,
-                3
-            ],
-            "names": [
-                "height",
-                "width",
-                "channel"
-            ],
-            "video_info": {
-                "video.fps": 0.5,
-                "video.codec": "h264",
-                "video.pix_fmt": "yuv420p",
-                "video.is_depth_map": false,
-                "has_audio": false
-            }
-        },
-        "observation.images.depth": {
-            "dtype": "video",
-            "shape": [
-                144,
-                256,
-                1
-            ],
-            "names": [
-                "height",
-                "width",
-                "channel"
-            ],
-            "video_info": {
-                "video.fps": 2.0,
-                "video.codec": "h264",
-                "video.pix_fmt": "yuv420p",
-                "video.is_depth_map": true,
-                "has_audio": false
-            }
-        },
-        "observation.state": {
-            "dtype": "float64",
-            "shape": [
-                6
-            ],
-            "names": [
-                "speed_x",
-                "speed_y",
-                "speed_z",
-                "speed_angle_dim1",
-                "speed_angle_dim2",
-                "speed_angle_dim3"
-            ]
-        },
-        "action": {
-            "dtype": "float64",
-            "shape": [
-                4
-            ],
-            "names": [
-                "v_x",
-                "v_y",
-                "v_z",
-                "v_yaw"
-            ]
-        },
-        "timestamp": {
-            "dtype": "float64",
-            "shape": [
-                1
-            ]
-        },
-        "annotation.human.action.task_description": {
-            "dtype": "int64",
-            "shape": [
-                1
-            ]
-        },
-        "task_index": {
-            "dtype": "int64",
-            "shape": [
-                1
-            ]
-        },
-        "annotation.human.validity": {
-            "dtype": "int64",
-            "shape": [
-                1
-            ]
-        },
-        "episode_index": {
-            "dtype": "int64",
-            "shape": [
-                1
-            ]
-        },
-        "index": {
-            "dtype": "int64",
-            "shape": [
-                1
-            ]
-        },
-        "next.reward": {
-            "dtype": "float64",
-            "shape": [
-                1
-            ]
-        },
-        "next.done": {
-            "dtype": "bool",
-            "shape": [
-                1
-            ]
-        }
+    "observation.images.rgb": {
+      "dtype": "video",
+      "shape": [
+        144,
+        256,
+        3
+      ],
+      "names": [
+        "height",
+        "width",
+        "channel"
+      ],
+      "video_info": {
+        "video.fps": 0.5,
+        "video.codec": "h264",
+        "video.pix_fmt": "yuv420p",
+        "video.is_depth_map": false,
+        "has_audio": false
+      }
+    },
+    "observation.images.segmentation": {
+      "dtype": "video",
+      "shape": [
+        144,
+        256,
+        3
+      ],
+      "names": [
+        "height",
+        "width",
+        "channel"
+      ],
+      "video_info": {
+        "video.fps": 0.5,
+        "video.codec": "h264",
+        "video.pix_fmt": "yuv420p",
+        "video.is_depth_map": false,
+        "has_audio": false
+      }
+    },
+    "observation.state": {
+      "dtype": "float64",
+      "shape": [
+        9
+      ],
+      "names": [
+        "drone_velocity_1",
+        "drone_velocity_2",
+        "drone_velocity_3",
+        "drone_orientation_1",
+        "drone_orientation_2",
+        "drone_orientation_3",
+        "drone_angular_velocity_1",
+        "drone_angular_velocity_2",
+        "drone_angular_velocity_3"
+      ]
+    },
+    "action": {
+      "dtype": "float64",
+      "shape": [
+        4
+      ],
+      "names": [
+        "v1",
+        "v2",
+        "v3",
+        "yaw"
+      ]
+    },
+    "timestamp": {
+      "dtype": "float64",
+      "shape": [
+        1
+      ]
+    },
+    "annotation.human.action.task_description": {
+      "dtype": "int64",
+      "shape": [
+        1
+      ]
+    },
+    "task_index": {
+      "dtype": "int64",
+      "shape": [
+        1
+      ]
+    },
+    "annotation.human.validity": {
+      "dtype": "int64",
+      "shape": [
+        1
+      ]
+    },
+    "episode_index": {
+      "dtype": "int64",
+      "shape": [
+        1
+      ]
+    },
+    "index": {
+      "dtype": "int64",
+      "shape": [
+        1
+      ]
+    },
+    "next.reward": {
+      "dtype": "float64",
+      "shape": [
+        1
+      ]
+    },
+    "next.done": {
+      "dtype": "bool",
+      "shape": [
+        1
+      ]
     }
+  }
 }

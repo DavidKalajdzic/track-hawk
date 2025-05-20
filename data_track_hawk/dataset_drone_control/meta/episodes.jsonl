@@ -1,5 +1,6 @@
-{"episode_index": 0, "tasks": ["pick the pear from the counter and place it in the plate", "valid"], "length": 416}
-{"episode_index": 1, "tasks": ["pick the sweet potato from the counter and place it in the plate", "valid"], "length": 470}
-{"episode_index": 2, "tasks": ["pick the meat from the counter and place it in the plate", "valid"], "length": 470}
-{"episode_index": 3, "tasks": ["pick the salt from the counter and place it in the plate", "valid"], "length": 412}
-{"episode_index": 4, "tasks": ["pick the cupcake from the counter and place it in the plate", "valid"], "length": 328}
+{"episode_index": 0, "tasks": ["look at the box and follow it"], "length": 906}
+{"episode_index": 1, "tasks": ["look at the human and follow it"], "length": 1013}
+{"episode_index": 2, "tasks": ["look at the dog and follow it"], "length": 906}
+{"episode_index": 3, "tasks": ["look at the chicken and follow it"], "length": 906}
+{"episode_index": 4, "tasks": ["look at the buffalo and follow it"], "length": 1048}
+{"episode_index": 5, "tasks": ["look at the turtle and follow it"], "length": 906}

@@ -1,5 +1,6 @@
-{"task_index": 0, "task": "follow the person from a safe distance and avoid bumping into obstacles"}
-{"task_index": 1, "task": "follow the buffalo from a safe distance and avoid bumping into obstacles"}
-{"task_index": 2, "task": "follow the chicken from a safe distance and avoid bumping into obstacles"}
-{"task_index": 3, "task": "follow the dog from a safe distance and avoid bumping into obstacles"}
-{"task_index": 4, "task": "follow the turtle from a safe distance and avoid bumping into obstacles"}
+{"task_index": 0, "task": "look at the box and follow it"}
+{"task_index": 1, "task": "look at the human and follow it"}
+{"task_index": 2, "task": "look at the dog and follow it"}
+{"task_index": 3, "task": "look at the chicken and follow it"}
+{"task_index": 4, "task": "look at the buffalo and follow it"}
+{"task_index": 5, "task": "look at the turtle and follow it"}
