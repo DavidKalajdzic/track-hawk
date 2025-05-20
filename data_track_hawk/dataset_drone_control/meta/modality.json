@@ -2,7 +2,7 @@
     "state": {
         "drone_state": { 
             "start": 0,
-            "end": 5
+            "end": 6
         }
     },
     "action": {
@@ -12,12 +12,15 @@
         }
     },
     "video": {
+        "rgb": {
+            "original_key": "observation.images.rgb"
+        },
         "depth": {
             "original_key": "observation.images.depth"
         },
         
-        "vision": {
-            "original_key": "observation.images.vision"
+        "segmentation": {
+            "original_key": "observation.images.segmentation"
         }
     },
     "annotation": {
