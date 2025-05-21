@@ -1,0 +1,32 @@
+source /mloscratch/users/kalajdzi/.bashrc
+conda env list > envsyolo.txt
+conda activate gr00t
+
+sudo apt-get update
+sudo apt-get install --fix-missing -y libgl1
+
+python "Isaac-GR00T/scripts/gr00t_finetune.py" \
+  --dataset-path "data_track_hawk/dataset_drone_control/" \
+  --output-dir ./checkpoints \
+  --data-config track_hawk \
+  --batch-size 8 \
+  --max-steps 5000 \
+  --num-gpus 2 \
+  --save-steps 1000 \
+  --base-model-path nvidia/GR00T-N1-2B \
+  --no-tune-llm \
+  --no-tune-visual \
+  --tune-projector \
+  --tune-diffusion-model \
+  --learning-rate 1e-4 \
+  --weight-decay 1e-5 \
+  --warmup-ratio 0.05 \
+  --lora-rank 32 \
+  --lora-alpha 16 \
+  --lora-dropout 0.1 \
+  --dataloader-num-workers 16 \
+  --report-to tensorboard \
+  --embodiment-tag new_embodiment \
+  --video-backend decord
+
+mkdir "camarche$(date +%Y-%m-%d_%H-%M-%S)"
