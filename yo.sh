@@ -5,13 +5,13 @@ conda activate gr00t
 sudo apt-get update
 sudo apt-get install --fix-missing -y libgl1
 
-python "Isaac-GR00T/scripts/gr00t_finetune.py" \
-  --dataset-path "data_track_hawk/dataset_drone_control/" \
-  --output-dir ./checkpoints \
+python /mloscratch/users/kalajdzi/track-hawk/Isaac-GR00T/scripts/gr00t_finetune.py \
+  --dataset-path /mloscratch/users/kalajdzi/track-hawk/data_track_hawk/dataset_drone_control/ \
+  --output-dir /mloscratch/users/kalajdzi/track-hawk/checkpoints \
   --data-config track_hawk \
-  --batch-size 8 \
+  --batch-size 32 \
   --max-steps 5000 \
-  --num-gpus 2 \
+  --num-gpus 4 \
   --save-steps 1000 \
   --base-model-path nvidia/GR00T-N1-2B \
   --no-tune-llm \
@@ -25,7 +25,7 @@ python "Isaac-GR00T/scripts/gr00t_finetune.py" \
   --lora-alpha 16 \
   --lora-dropout 0.1 \
   --dataloader-num-workers 16 \
-  --report-to tensorboard \
+  --report-to wandb \
   --embodiment-tag new_embodiment \
   --video-backend decord
 

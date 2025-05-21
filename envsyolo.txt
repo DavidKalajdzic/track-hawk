@@ -1,5 +1,0 @@
-# conda environments:
-#
-base                     /mloscratch/users/kalajdzi/anaconda3
-gr00t                 *  /mloscratch/users/kalajdzi/anaconda3/envs/gr00t
-
