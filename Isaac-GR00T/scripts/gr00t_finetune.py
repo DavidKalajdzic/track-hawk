@@ -109,6 +109,12 @@ class Config:
     video_backend: str = "decord"
     """Video backend to use for training. [decord, torchvision_av]"""
 
+    tf32: bool = True
+    """Whether to use TensorFloat-32 (TF32) for training."""
+
+    attn_implementation: str = "eager"
+    """Attention implementation to use. [sdpa, flash_attention_2, eager]"""
+
 
 #####################################################################################
 # main training function
@@ -141,6 +147,7 @@ def main(config: Config):
         tune_visual=config.tune_visual,  # backbone's vision tower
         tune_projector=config.tune_projector,  # action head's projector
         tune_diffusion_model=config.tune_diffusion_model,  # action head's DiT
+        attn_implementation=config.attn_implementation
     )
 
     # Set the model's compute_dtype to bfloat16
@@ -163,7 +170,7 @@ def main(config: Config):
         deepspeed="",
         gradient_checkpointing=False,
         bf16=True,
-        tf32=True,
+        tf32=config.tf32,
         per_device_train_batch_size=config.batch_size,
         gradient_accumulation_steps=1,
         dataloader_num_workers=config.dataloader_num_workers,

@@ -99,7 +99,7 @@ class EagleBackbone(nn.Module):
         if use_local_eagle_hg_model:
             model_name = DEFAULT_EAGLE_MODEL_NAME
 
-        config = AutoConfig.from_pretrained(model_name, trust_remote_code=True)
+        config = AutoConfig.from_pretrained(model_name, trust_remote_code=True, attn_implementation= "eager")
         self.model = AutoModel.from_config(config, trust_remote_code=True)
         self.model.neftune_alpha = None
 
