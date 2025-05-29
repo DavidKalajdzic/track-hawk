@@ -9,7 +9,7 @@ python /mloscratch/users/kalajdzi/track-hawk/Isaac-GR00T/scripts/gr00t_finetune.
   --dataset-path /mloscratch/users/kalajdzi/track-hawk/data_track_hawk/dataset_drone_control/ \
   --output-dir /mloscratch/users/kalajdzi/track-hawk/checkpoints \
   --data-config track_hawk \
-  --batch-size 32 \
+  --batch-size 48 \
   --max-steps 5000 \
   --num-gpus 4 \
   --save-steps 1000 \
@@ -21,10 +21,10 @@ python /mloscratch/users/kalajdzi/track-hawk/Isaac-GR00T/scripts/gr00t_finetune.
   --learning-rate 1e-4 \
   --weight-decay 1e-5 \
   --warmup-ratio 0.05 \
-  --lora-rank 32 \
+  --lora-rank 0 \
   --lora-alpha 16 \
   --lora-dropout 0.1 \
-  --dataloader-num-workers 16 \
+  --dataloader-num-workers 32 \
   --report-to wandb \
   --embodiment-tag new_embodiment \
   --video-backend decord

@@ -162,6 +162,7 @@ class GR00T_N1(PreTrainedModel):
         self,
         inputs: dict,
     ) -> BatchFeature:
+        print("IINPUUUTA", inputs)
         backbone_inputs, action_inputs = self.prepare_input(inputs)
         backbone_outputs = self.backbone(backbone_inputs)
         action_head_outputs = self.action_head(backbone_outputs, action_inputs)
@@ -172,6 +173,7 @@ class GR00T_N1(PreTrainedModel):
         self,
         inputs: dict,
     ) -> BatchFeature:
+        print("IINPUUUTB", inputs)
         backbone_inputs, action_inputs = self.prepare_input(inputs)
         # Because the behavior of backbones remains the same for training and inference, we can use `forward` for backbones.
         backbone_outputs = self.backbone(backbone_inputs)
@@ -185,12 +187,36 @@ class GR00T_N1(PreTrainedModel):
         action_inputs = self.action_head.prepare_input(inputs)
 
         def to_device_with_maybe_dtype(x):
-            # Only cast to self.compute_dtype if the tensor is floating
-            if torch.is_floating_point(x):
-                return x.to(self.device, dtype=self.action_head.dtype)
+            # Print the type to debug
+            print("LETS SEE", type(x))
+
+            # Convert numpy arrays to torch tensors
+            if isinstance(x, np.ndarray):
+                # Ensure numpy array has a compatible dtype for torch.from_numpy
+                # For example, if it's int, keep it int; if float, keep it float.
+                # torch.from_numpy creates a tensor with the same dtype as the numpy array.
+                x = torch.from_numpy(x)
+
+            # Convert standard Python numbers (int, float) to torch tensors
+            if isinstance(x, (int, float)):
+                x = torch.tensor(x)
+
+            # If it's a torch.Tensor, move to device and apply dtype conversion if floating point
+            if isinstance(x, torch.Tensor):
+                if torch.is_floating_point(x):
+                    # Ensure dtype is consistent with what action_head expects (self.action_head.dtype)
+                    # For example, if self.compute_dtype is "bfloat16", action_head.dtype might be torch.bfloat16
+                    target_dtype = getattr(torch, self.compute_dtype) if isinstance(self.compute_dtype, str) else self.compute_dtype
+                    # If x is uint8 from pixel_values, it's typically normalized to float before backbone,
+                    # so this casting will happen correctly for floating point data.
+                    # For int-like tensors (e.g., input_ids, attention_mask), their dtype should be preserved.
+                    return x.to(self.device, dtype=target_dtype)
+                else:
+                    return x.to(self.device)
             else:
-                # Keep original dtype
-                return x.to(self.device)
+                # If it's still not a tensor (e.g., a string, boolean, or a structure that shouldn't be a tensor),
+                # just return it as is.
+                return x
 
         backbone_inputs = tree.map_structure(to_device_with_maybe_dtype, backbone_inputs)
         action_inputs = tree.map_structure(to_device_with_maybe_dtype, action_inputs)
