@@ -56,4 +56,7 @@ Model fine-tuning strategies tested:
 
 Training was executed using two A100 GPUs, with evaluation based on offline metrics (Mean Squared Error) and online performance tests in AirSim.
 
-To finetune the model with LoRA fine-tuning, run the script `run_finetuning.sh` at the root of the project.
+To reproduce the finetuning:     
+1- go in the modified `Isaac-GR00T` folder and follow the instruction.    
+2- run the script `run_finetuning.sh` at the root of the project on your dedicated cluster.    
+
