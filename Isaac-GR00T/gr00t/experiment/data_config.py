@@ -691,7 +691,8 @@ class TrackHawkDataConfig(BaseDataConfig):
 
     observation_indices = [0]
     action_indices = list(range(16))
-    language_keys = ["annotation.human.action.task_description"] #might also need to add human_validity, see modality.json
+    language_keys = [
+        "annotation.human.action.task_description"]  # might also need to add human_validity, see modality.json
 
     def modality_config(self):
         video_modality = ModalityConfig(
@@ -717,13 +718,13 @@ class TrackHawkDataConfig(BaseDataConfig):
             "language": language_modality,
         }
         return modality_configs
-    
+
     def transform(self):
         transforms = [
             # video transforms
             VideoToTensor(apply_to=self.video_keys),
-            #VideoCrop(apply_to=self.video_keys, scale=0.95),
-            #VideoResize(apply_to=self.video_keys, height=224, width=224, interpolation="linear"),
+            # VideoCrop(apply_to=self.video_keys, scale=0.95),
+            # VideoResize(apply_to=self.video_keys, height=224, width=224, interpolation="linear"),
             VideoColorJitter(
                 apply_to=self.video_keys,
                 brightness=0.3,
@@ -732,7 +733,7 @@ class TrackHawkDataConfig(BaseDataConfig):
                 hue=0.08,
             ),
             VideoToNumpy(apply_to=self.video_keys),
-            
+
             # state transforms
             StateActionToTensor(apply_to=self.state_keys),
             StateActionTransform(
@@ -760,8 +761,6 @@ class TrackHawkDataConfig(BaseDataConfig):
         ]
 
         return ComposedModalityTransform(transforms=transforms)
-
-
 
 
 DATA_CONFIG_MAP = {

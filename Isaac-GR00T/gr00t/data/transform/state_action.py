@@ -118,7 +118,7 @@ class Normalizer:
             # In the case of q01 == q99, the normalization will be undefined
             # So we set the normalized values to the original values
             mask = q01 != q99
-            normalized = torch.zeros_like(x)
+            normalized = torch.zeros_like(xi)
 
             # Normalize the values where q01 != q99
             # Formula: 2 * (x - q01) / (q99 - q01) - 1
@@ -152,19 +152,28 @@ class Normalizer:
 
         elif self.mode == "min_max":
             # Range of min_max is [-1, 1]
+            x = x.to(torch.float32)
+                
             min = self.statistics["min"].to(x.dtype)
             max = self.statistics["max"].to(x.dtype)
 
             # In the case of min == max, the normalization will be undefined
             # So we set the normalized values to the original values
             mask = min != max
+            
             normalized = torch.zeros_like(x)
-
+            print("TESSSST", x.dtype, normalized.dtype, mask.dtype)
+                  
             # Normalize the values where min != max
             # Formula: 2 * (x - min) / (max - min) - 1
-            normalized[..., mask] = (x[..., mask] - min[..., mask]) / (
+            rhs = (x[..., mask] - min[..., mask]) / (
                 max[..., mask] - min[..., mask]
             )
+            print(rhs.dtype)
+            normalized[..., mask] = rhs
+
+            print("hey")
+            
             normalized[..., mask] = 2 * normalized[..., mask] - 1
 
             # Set the normalized values to the original values where min == max

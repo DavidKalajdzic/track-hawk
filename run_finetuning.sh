@@ -3,9 +3,9 @@
 #SBATCH --ntasks=1                     
 #SBATCH --nodes=1                      
 #SBATCH --gres=gpu:2                   
-#SBATCH --time=6:00:00                
-#SBATCH --cpus-per-task=32             
-#SBATCH --mem=60G                      
+#SBATCH --time=6:00:00
+#SBATCH --cpus-per-task=32
+#SBATCH --mem=60G
 #SBATCH --account=master
 #SBATCH --partition=test       # if you want to run on the A100s, but there are only 2GPUs available
 

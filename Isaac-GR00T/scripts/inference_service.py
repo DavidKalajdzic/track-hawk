@@ -116,6 +116,13 @@ if __name__ == "__main__":
             "state.waist": np.random.rand(1, 3),
             "annotation.human.action.task_description": ["do your thing!"],
         }
+        obs = {
+            "video.depth": np.random.randint(0, 256, (144, 256, 3), dtype=np.uint8),
+            "video.rgb": np.random.randint(0, 256, (144, 256, 3), dtype=np.uint8),
+            "video.segmentation": np.random.randint(0, 256, (144, 256, 3), dtype=np.uint8),
+            "state.drone_state": np.random.randn(9).astype(np.uint8),
+            "annotation.human.action.task_description": ["do your thing!"],
+        }
 
         time_start = time.time()
         action = policy_client.get_action(obs)
