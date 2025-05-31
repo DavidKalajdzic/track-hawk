@@ -17,7 +17,6 @@ client.enableApiControl(True)
 client.armDisarm(True)
 client.takeoffAsync().join()
 
-# Define initial velocity and position
 velocity = 2  # m/s
 duration = 0.5  # movement duration
 running = True
@@ -59,11 +58,9 @@ def on_press(key):
 
 print("Control the drone using arrow keys. Use 'U' to go up, 'D' to go down. Press 'Q' to quit.")
 
-# Start listening to keyboard in a non-blocking way
 listener = keyboard.Listener(on_press=on_press)
 listener.start()
 
-# Keep the program running until 'Q' is pressed
 while running:
     time.sleep(0.1)
 

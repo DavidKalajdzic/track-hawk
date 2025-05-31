@@ -1,7 +1,10 @@
 """
-Follower script – resource-safe version
+Follower script
 Runs indefinitely until you press Ctrl-C.
 Tested on macOS 14 (Apple M4) with AirSim v1.9.1-Linux/Mac.
+
+This scripts follows a object that is moving along a spline path (that spline path has been programmed with the Unreal Engine Visual Programming tool).
+the drone kinematics data is saved every DT (0.1 sec) to a pickle file, meanwhile images are saved every IMG_EVERY_N steps (default: 20)
 """
 
 import airsim, numpy as np, time, pickle, os, cv2
@@ -10,13 +13,13 @@ from concurrent.futures import ThreadPoolExecutor
 from io import BytesIO
 
 # ── PARAMETERS ──────────────────────────────────────────────────────────────
-TARGET        = "BP_SplineObject_C_3"
+TARGET        = "BP_SplineObject_C_3" # object to follow (name in Unreal Engine)
 FOLLOW_DIST   = 1.0      # m
 MAX_SPEED     = 2.2      # m/s
 DT            = 0.1      # s   (main control period)
-YAW_P_GAIN    = 120.0    # ° s-¹ per rad error (≈ 2 rad/s × 57.3)
-IMG_EVERY_N   = 20        # capture each N-th step (set >1 to lighten the load)
-DATA_DIR      = "camera_data_test_train"+str(time.time())
+YAW_P_GAIN    = 120.0
+IMG_EVERY_N   = 20        # capture images every N-th step of DT
+DATA_DIR      = "recording_drone_data"+str(time.time())
 
 # ── INIT ─────────────────────────────────────────────────────────────────────
 os.makedirs(DATA_DIR, exist_ok=True)
@@ -101,14 +104,10 @@ try:
 
         action   = np.array([v[0], v[1], v[2], yaw_rate], np.float32)
 
-        # non-blocking image save (only every IMG_EVERY_N steps)
         if step % IMG_EVERY_N == 0:
-            #pass
-            client.simPause(True)
+            client.simPause(True) # need to pause simulation because saving images takes enough time to distrurb the simulation...
             save_images(step)
             client.simPause(False)
-            #save_images(step)
-        
 
         log.append({
             "timestamp": time.time(),
@@ -127,9 +126,9 @@ try:
             "action": action
         })
 
-        fut = client.moveByVelocityAsync(v[0], v[1], v[2], DT,
+        fut = client.moveByVelocityAsync(action[0], action[1], action[2], DT,
                                          airsim.DrivetrainType.MaxDegreeOfFreedom,
-                                         airsim.YawMode(True, yaw_rate))
+                                         airsim.YawMode(True, action[3]))
         
         fut.join()
 
