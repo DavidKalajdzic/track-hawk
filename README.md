@@ -35,10 +35,10 @@ data_track_hawk/
 To reproduce data collection and simulation:    
 1- Download Unreal Engine 5.5.4, the forked version of [AirSim](https://github.com/OpenSourceVideoGames/AirSim) and the following [City Park](https://drive.google.com/file/d/1Ofippa0zpMLpgj-gZ11KP5vtPA803J5-/view?usp=sharing) environment.     
 2- Create a python conda environment with version 3.11, and execute `pip install -r requirements.txt` in the **AirSim** repository.    
-3- Copy in the file simulation_scripts/collector_drone.py into AirSim/PythonClient/multirotor.     
+3- Copy in the file `simulation_scripts/collector_drone.py` into `AirSim/PythonClient/multirotor`.     
 4- Launch Unreal Engine and CityPark's project via the CityPark.uproject file at the root of the **CityPark** folder.    
 6- Click on the green in the IDE to start the simulation.     
-7- Launch within the `AirSim/PythonClient/multirotor` folder the collector script through the conda environment via python simulation_scripts/collector_drone.py and wait for completion of the data collection.     
+7- Launch within the `AirSim/PythonClient/multirotor` folder the collector script through the conda environment via python `simulation_scripts/collector_drone.py` and wait for completion of the data collection.     
 8- Create he DR00NE dataset by running the `simluation_to_DR00NE_format.ipynb` file generating it into `dataset_drone_control`.    
 
 ## Model Training and Inference
