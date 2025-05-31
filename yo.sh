@@ -9,13 +9,13 @@ python /mloscratch/users/kalajdzi/track-hawk/Isaac-GR00T/scripts/gr00t_finetune.
   --dataset-path /mloscratch/users/kalajdzi/track-hawk/data_track_hawk/dataset_drone_control/ \
   --output-dir /mloscratch/users/kalajdzi/track-hawk/checkpoints \
   --data-config track_hawk \
-  --batch-size 48 \
+  --batch-size 32 \
   --max-steps 5000 \
   --num-gpus 4 \
   --save-steps 1000 \
   --base-model-path nvidia/GR00T-N1-2B \
   --no-tune-llm \
-  --no-tune-visual \
+  --tune-visual \
   --tune-projector \
   --tune-diffusion-model \
   --learning-rate 1e-4 \
