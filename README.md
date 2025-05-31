@@ -39,7 +39,7 @@ To reproduce data collection and simulation:
 4- Launch Unreal Engine and CityPark's project via the CityPark.uproject file at the root of the **CityPark** folder.    
 6- Click on the green in the IDE to start the simulation.     
 7- Launch within the `AirSim/PythonClient/multirotor` folder the collector script through the conda environment via python `simulation_scripts/collector_drone.py` and wait for completion of the data collection.     
-8- Create he DR00NE dataset by running the `simluation_to_DR00NE_format.ipynb` file generating it into `dataset_drone_control`.    
+8- Create the DR00NE dataset by running the `simluation_to_DR00NE_format.ipynb` file generating it into `dataset_drone_control`.    
 
 ## Model Training and Inference
 
