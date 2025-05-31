@@ -108,21 +108,20 @@ if __name__ == "__main__":
         # - action: action.right_hand: (16, 6)
         # - action: action.waist: (16, 3)
         obs = {
-            "video.ego_view": np.random.randint(0, 256, (1, 256, 256, 3), dtype=np.uint8),
-            "state.left_arm": np.random.rand(1, 7),
-            "state.right_arm": np.random.rand(1, 7),
-            "state.left_hand": np.random.rand(1, 6),
-            "state.right_hand": np.random.rand(1, 6),
-            "state.waist": np.random.rand(1, 3),
-            "annotation.human.action.task_description": ["do your thing!"],
+            "video.depth": np.random.randint(0, 256, (1, 144, 256, 3), dtype=np.uint8),
+            "video.rgb": np.random.randint(0, 256, (1, 144, 256, 3), dtype=np.uint8),
+            "video.segmentation": np.random.randint(0, 256, (1, 144, 256, 3), dtype=np.uint8),
+            "state.drone_state": np.random.rand(1, 9).astype(np.float64) * 256,
+            "annotation.human.action.task_description": ["look at the box and follow it"],
         }
 
-        time_start = time.time()
-        action = policy_client.get_action(obs)
-        print(f"Total time taken to get action from server: {time.time() - time_start} seconds")
+    time_start = time.time()
+    action = policy_client.get_action(obs)
+    print(f"Total time taken to get action from server: {time.time() - time_start} seconds")
 
-        for key, value in action.items():
-            print(f"Action: {key}: {value.shape}")
+    for key, value in action.items():
+        print(f"Action: {key}: {value.shape}")
+        print(value)
 
-    else:
-        raise ValueError("Please specify either --server or --client")
+else:
+    raise ValueError("Please specify either --server or --client")
