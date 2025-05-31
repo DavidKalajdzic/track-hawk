@@ -33,7 +33,7 @@ data_track_hawk/
         └── observation.images.segmentation
 ```
 To reproduce data collection and simulation:    
-1- Download Unreal Engine 5.5.4, the forked version of [AirSim](https://github.com/OpenSourceVideoGames/AirSim) and the following [City Park](https://drive.google.com/file/d/1Ofippa0zpMLpgj-gZ11KP5vtPA803J5-/view?usp=sharing) environment.     
+1- Download Unreal Engine 5.5.4, the forked version of [AirSim](https://github.com/OpenSourceVideoGames/AirSim) or [here](https://drive.google.com/file/d/1JDXIQsXcHFBBpZgum81xFZM1-KNpCeXJ/view?usp=share_link) if it does not work and the following [City Park](https://drive.google.com/file/d/1Ofippa0zpMLpgj-gZ11KP5vtPA803J5-/view?usp=sharing) environment.     
 2- Create a python conda environment with version 3.11, and execute `pip install -r requirements.txt` in the **AirSim** repository.    
 3- Copy in the file `simulation_scripts/collector_drone.py` into `AirSim/PythonClient/multirotor`.     
 4- Launch Unreal Engine and CityPark's project via the CityPark.uproject file at the root of the **CityPark** folder.    
