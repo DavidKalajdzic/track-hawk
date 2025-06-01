@@ -18,7 +18,7 @@ Engine), consisting of synchronized RGB images, depth maps, and segmentation mas
 * **TrackHawk Model:** A GR00T N1 model fine-tuned with Low Rank Adaptation (LoRA rank 32), specifically adapted for
   drone velocity control from visual, language, and drone-state inputs.
 * **Simulator Tooling & Pipelines:** Automation scripts for data collection, conversion to HuggingFace/LeRobot format,
-  and model training/evaluation within AirSim.
+  and model training/evaluation within AirSim (that connects to Unreal Engine).
 
 ## Dataset Collection and Simulation
 
