@@ -44,12 +44,16 @@ data_track_hawk/
         └── observation.images.segmentation
 ```
 
-To reproduce data collection and simulation:    
+Note that the folder before_processing is available on Huggingface at [Track-Hawk Raw Input Dataset](https://huggingface.co/datasets/DavidKalajdzic/track_hawk_before_processing/tree/main).
+Note that the folder dataset_drone_control is available on Huggingface at [Track-Hawk Dr00ne Dataset](https://huggingface.co/datasets/DavidKalajdzic/dr00ne/tree/main).
+
+To reproduce data collection and simulation:
+0- Find a MacBook Pro with M4 Max 64Gb chip
 1- Download Unreal Engine 5.5.4, the forked version of [AirSim](https://github.com/OpenSourceVideoGames/AirSim)
 or [here](https://drive.google.com/file/d/1JDXIQsXcHFBBpZgum81xFZM1-KNpCeXJ/view?usp=share_link) if it does not work and
 the following [City Park](https://drive.google.com/file/d/1Ofippa0zpMLpgj-gZ11KP5vtPA803J5-/view?usp=sharing)
 environment.     
-2- Create a python conda environment with version 3.11, and execute `pip install -r requirements.txt` in the **AirSim**
+2- Create a python conda environment with version 3.10, and execute `pip install -r requirements.txt` in the **AirSim**
 repository.    
 3- Copy in the file `simulation_scripts/collector_drone.py` into `AirSim/PythonClient/multirotor`.     
 4- Launch Unreal Engine and CityPark's project via the CityPark.uproject file at the root of the **CityPark**
@@ -62,6 +66,8 @@ python `simulation_scripts/collector_drone.py` and wait for completion of the da
 
 Check the `1_dr00ne_dataset.ipynb` notebook for more details on the dataset generation and how to visualize the results.
 
+
+
 ## Model Training and Inference
 
 The **TrackHawk Model** leverages a modified GR00T N1 adapted for drone present in `Isaac-GR00T`, integrating:
@@ -73,7 +79,8 @@ The **TrackHawk Model** leverages a modified GR00T N1 adapted for drone present 
 Model fine-tuning strategies tested:
 
 * **LoRA fine-tuning (rank 32)** for the action head.
-* **Full fine-tuning** for further accuracy.
+* **LoRA fine-tuning of the action head (rank 0)** for the action head.
+* **Full fine-tuning of action head and vision encoder** for further accuracy.
 
 Training was executed using two to four A100 GPUs, with evaluation based on offline metrics (Mean Squared Error) and
 online performance tests in AirSim.
@@ -85,7 +92,8 @@ Check at `2_dr00ne_finetune.ipynb` notebook for more details of each model we tr
 
 ## Evaluation and Results
 
-* : We evaluated the model offline using the dataset and online with AirSim (using the , measuring the Mean Squared Error (MSE) of the
-  predicted velocities against ground truth. The model was predicting 16 time steps ahead and the model was against the
-  ground truth of the next 16 time steps. The MSE was calculated for each time step and averaged over the entire
-  dataset.
+* 	Offline Evaluation:
+We used the dataset to run the model at multiple inference points, predicting 16 future actions each time. The Mean Squared Error (MSE) between predictions and ground truth was computed per step and averaged. This helps assess how well the model fits the data. Plots in `3_evaluate_finetuned_models.ipynb` show MSE curves per task and per action dimension, highlighting differences between predicted and actual trajectories.
+*  Online Evaluation:
+In AirSim, the model was deployed to control a drone in real time. We compared its predicted actions to the ground truth actions taken during the simulation. MSE was again computed over 16-step horizons to verify if the model generalizes to a live environment.
+Note: This part is challenging to reproduce, you will need to setup AirSim and connect it to Unreal Engine by running the .py and stream the current drone state locally to the cluster to get the predictions and then feed this back to the drone with AirSim.
