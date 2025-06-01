@@ -162,17 +162,17 @@ class Normalizer:
             mask = min != max
             
             normalized = torch.zeros_like(x)
-            print("TESSSST", x.dtype, normalized.dtype, mask.dtype)
+            #print("TESSSST", x.dtype, normalized.dtype, mask.dtype)
                   
             # Normalize the values where min != max
             # Formula: 2 * (x - min) / (max - min) - 1
             rhs = (x[..., mask] - min[..., mask]) / (
                 max[..., mask] - min[..., mask]
             )
-            print(rhs.dtype)
+            #print(rhs.dtype)
             normalized[..., mask] = rhs
 
-            print("hey")
+            #print("hey")
             
             normalized[..., mask] = 2 * normalized[..., mask] - 1
 
