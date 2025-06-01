@@ -81,7 +81,7 @@ def calc_mse_for_single_trajectory(
     gt_action_joints_across_time = np.array(gt_action_joints_across_time)
     pred_action_joints_across_time = np.array(pred_action_joints_across_time)[:steps]
 
-    print("SHAPESSS", state_joints_across_time.shape, gt_action_joints_across_time.shape, pred_action_joints_across_time.shape)
+    #print("SHAPESSS", state_joints_across_time.shape, gt_action_joints_across_time.shape, pred_action_joints_across_time.shape)
     # SHAPESSS (150, 9) (150, 4) (150, 4)
     #assert (
     #    state_joints_across_time.shape

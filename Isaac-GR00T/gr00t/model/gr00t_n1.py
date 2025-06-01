@@ -162,7 +162,7 @@ class GR00T_N1(PreTrainedModel):
         self,
         inputs: dict,
     ) -> BatchFeature:
-        print("IINPUUUTA", inputs)
+        #print("IINPUUUTA", inputs)
         backbone_inputs, action_inputs = self.prepare_input(inputs)
         backbone_outputs = self.backbone(backbone_inputs)
         action_head_outputs = self.action_head(backbone_outputs, action_inputs)
@@ -173,7 +173,7 @@ class GR00T_N1(PreTrainedModel):
         self,
         inputs: dict,
     ) -> BatchFeature:
-        print("IINPUUUTB", inputs)
+        #print("IINPUUUTB", inputs)
         backbone_inputs, action_inputs = self.prepare_input(inputs)
         # Because the behavior of backbones remains the same for training and inference, we can use `forward` for backbones.
         backbone_outputs = self.backbone(backbone_inputs)
@@ -188,7 +188,7 @@ class GR00T_N1(PreTrainedModel):
 
         def to_device_with_maybe_dtype(x):
             # Print the type to debug
-            print("LETS SEE", type(x))
+            #print("LETS SEE", type(x))
 
             # Convert numpy arrays to torch tensors
             if isinstance(x, np.ndarray):
