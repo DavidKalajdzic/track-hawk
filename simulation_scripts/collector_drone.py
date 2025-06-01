@@ -1,7 +1,9 @@
 """
 Follower script
 Runs indefinitely until you press Ctrl-C.
-Tested on macOS 14 (Apple M4) with AirSim v1.9.1-Linux/Mac.
+Used on macOS 15.5 (Apple M4)
+AirSim (https://github.com/OpenSourceVideoGames/AirSim/tree/7326b022db36bba9819215367adc0895d51e4a8a)
+Unreal Engine 5.5.4
 
 This scripts follows a object that is moving along a spline path (that spline path has been programmed with the Unreal Engine Visual Programming tool).
 the drone kinematics data is saved every DT (0.1 sec) to a pickle file, meanwhile images are saved every IMG_EVERY_N steps (default: 20)
@@ -31,7 +33,7 @@ client.armDisarm(True)
 client.takeoffAsync().join()
 
 
-log  = []                                   # (tracking + action history)
+log  = [] # (tracking + action history) will be saved as pickle file
 
 # ── HELPERS ──────────────────────────────────────────────────────────────────
 def get_target_pose():
@@ -74,7 +76,7 @@ def save_images(index: int):
 
 
 # ── MAIN LOOP ───────────────────────────────────────────────────────────────
-print("Following…  (Ctrl-C to stop)")
+print("Following...  (Ctrl-C to stop)")
 step = 0
 try:
     while step <= 18120:
@@ -133,7 +135,7 @@ try:
         fut.join()
 
 except KeyboardInterrupt:
-    print("\nLanding…")
+    print("\nLanding...")
 finally:
     pkle_name = DATA_DIR+"/follow_data.pkl"
     with open(pkle_name, "wb") as f:
