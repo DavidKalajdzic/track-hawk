@@ -86,10 +86,15 @@ Model fine-tuning strategies tested:
 Training was executed using two to four A100 GPUs, with evaluation based on offline metrics (Mean Squared Error) and
 online performance tests in AirSim.
 
-To reproduce the finetuning:     
+To reproduce the finetuning:
 1- go in the modified `Isaac-GR00T` folder and follow the instruction.    
 2- run the script `run_finetuning.sh` at the root of the project on your dedicated cluster.    
 Check at `2_dr00ne_finetune.ipynb` notebook for more details of each model we trained and with what parameters.
+
+Models are available on HuggingFace at
+[Model 1](https://huggingface.co/DavidKalajdzic/dr00ne-gr00t-lora-rank32),
+[Model 2](https://huggingface.co/DavidKalajdzic/dr00ne-gr00t-lora-rank0) and
+[Model 3](https://huggingface.co/DavidKalajdzic/dr00ne-gr00t-lora-rank0-vision-unfreezed) ✨
 
 ## Evaluation and Results
 
