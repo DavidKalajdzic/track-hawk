@@ -44,29 +44,30 @@ data_track_hawk/
         └── observation.images.segmentation
 ```
 
-Note that the folder before_processing is available on Huggingface at [Track-Hawk Raw Input Dataset](https://huggingface.co/datasets/DavidKalajdzic/track_hawk_before_processing/tree/main).
-Note that the folder dataset_drone_control is available on Huggingface at [Track-Hawk Dr00ne Dataset](https://huggingface.co/datasets/DavidKalajdzic/dr00ne/tree/main).
+Note that the folder before_processing is available on Huggingface
+at [Track-Hawk Raw Input Dataset](https://huggingface.co/datasets/DavidKalajdzic/track_hawk_before_processing/tree/main).
+Note that the folder dataset_drone_control is available on Huggingface
+at [Track-Hawk Dr00ne Dataset](https://huggingface.co/datasets/DavidKalajdzic/dr00ne/tree/main).
 
-To reproduce data collection and simulation:
-0- Find a MacBook Pro with M4 Max 64Gb chip
-1- Download Unreal Engine 5.5.4, the forked version of [AirSim](https://github.com/OpenSourceVideoGames/AirSim)
+To reproduce data collection and simulation (warning this is challenging to setup!):
+
+1. Find a MacBook Pro with M4 Max 64Gb chip
+2. Download Unreal Engine 5.5.4, the forked version of [AirSim](https://github.com/OpenSourceVideoGames/AirSim)
 or [here](https://drive.google.com/file/d/1JDXIQsXcHFBBpZgum81xFZM1-KNpCeXJ/view?usp=share_link) if it does not work and
 the following [City Park](https://drive.google.com/file/d/1Ofippa0zpMLpgj-gZ11KP5vtPA803J5-/view?usp=sharing)
 environment.     
-2- Create a python conda environment with version 3.10, and execute `pip install -r requirements.txt` in the **AirSim**
+3. Create a python conda environment with version 3.10, and execute `pip install -r requirements.txt` in the **AirSim**
 repository.    
-3- Copy in the file `simulation_scripts/collector_drone.py` into `AirSim/PythonClient/multirotor`.     
-4- Launch Unreal Engine and CityPark's project via the CityPark.uproject file at the root of the **CityPark**
+4. Copy in the file `simulation_scripts/collector_drone.py` into `AirSim/PythonClient/multirotor`.     
+5. Launch Unreal Engine and CityPark's project via the CityPark.uproject file at the root of the **CityPark**
 folder.    
-6- Click on the green in the IDE to start the simulation.     
-7- Launch within the `AirSim/PythonClient/multirotor` folder the collector script through the conda environment via
+6. Click on the green in the IDE to start the simulation.     
+7. Launch within the `AirSim/PythonClient/multirotor` folder the collector script through the conda environment via
 python `simulation_scripts/collector_drone.py` and wait for completion of the data collection.     
-8- Create the DR00NE dataset by running the `simluation_to_DR00NE_format.ipynb` file generating it into
+8. Create the DR00NE dataset by running the `simluation_to_DR00NE_format.ipynb` file generating it into
 `dataset_drone_control`.
 
 Check the `1_dr00ne_dataset.ipynb` notebook for more details on the dataset generation and how to visualize the results.
-
-
 
 ## Model Training and Inference
 
@@ -92,8 +93,21 @@ Check at `2_dr00ne_finetune.ipynb` notebook for more details of each model we tr
 
 ## Evaluation and Results
 
-* 	Offline Evaluation:
-We used the dataset to run the model at multiple inference points, predicting 16 future actions each time. The Mean Squared Error (MSE) between predictions and ground truth was computed per step and averaged. This helps assess how well the model fits the data. Plots in `3_evaluate_finetuned_models.ipynb` show MSE curves per task and per action dimension, highlighting differences between predicted and actual trajectories.
-*  Online Evaluation:
-In AirSim, the model was deployed to control a drone in real time. We compared its predicted actions to the ground truth actions taken during the simulation. MSE was again computed over 16-step horizons to verify if the model generalizes to a live environment.
-Note: This part is challenging to reproduce, you will need to setup AirSim and connect it to Unreal Engine by running the .py and stream the current drone state locally to the cluster to get the predictions and then feed this back to the drone with AirSim.
+#### Offline Evaluation:
+  We used the dataset to run the model at multiple inference points, predicting 16 future actions each time. The Mean
+  Squared Error (MSE) between predictions and ground truth was computed per step and averaged. This helps assess how
+  well the model fits the data. Plots in `3_evaluate_finetuned_models.ipynb` show MSE curves per task and per action
+  dimension, highlighting differences between predicted and actual trajectories.
+
+#### Online Evaluation:
+  1. Make everything is setup and sure the airsim package has been installed as explained at step 2 of the dataset collection and simulation.
+  2. This script is very similar to the `simulation_scripts/collector_drone.py` because we want at the beginning the drone to be following the object and then once it is ready we take over the control of the drone to the model.
+  
+  3. In the cluster run the inference service at port 5555
+  ```bash
+    python scripts/inference_service.py --server     --model_path DavidKalajdzic/dr00ne-gr00t-lora-rank0-vision-unfreezed     --embodiment_tag new_embodiment     --data_config track_hawk
+  ```
+  4. Then port forward the port 5555 to your local machine.
+
+  5. And finally launch the simulation_scripts/collector_drone.py
+     `/Isaac-GR00T/scripts/online_evaluation_drone.py` script and look at the results in the AirSim simulator. In the notebook you can find a link to a video.
